@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Márgenes y paddings -->
+    <dimen name="margin_card">8dp</dimen>
+    <dimen name="padding_card">12dp</dimen>
+    <dimen name="margin_xsmall">2dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_large">12dp</dimen>
+
+    <!-- Tamaños de texto -->
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_normal">13sp</dimen>
+    <dimen name="text_size_medium">14sp</dimen>
+    <dimen name="text_size_large">16sp</dimen>
+
+    <!-- Dimensiones para el poster -->
+    <dimen name="movie_poster_width">110dp</dimen>
+    <dimen name="movie_poster_height">120dp</dimen>
+
+    <!-- Otras dimensiones existentes -->
+    <dimen name="chip_min_height">24dp</dimen>
+</resources>

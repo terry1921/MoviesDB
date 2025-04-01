@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_card"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Poster de la película -->
+        <ImageView
+            android:id="@+id/ivPoster"
+            android:layout_width="@dimen/movie_poster_width"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/poster_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Número de votos en la esquina superior derecha -->
+        <TextView
+            android:id="@+id/tvVoteCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1234 votos"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Título de la película -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Título de la película"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_large"
+            android:maxLines="2"
+            android:ellipsize="marquee"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/ivPoster"
+            app:layout_constraintEnd_toStartOf="@id/tvVoteCount"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Fecha de estreno en lugar del año -->
+        <TextView
+            android:id="@+id/tvReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2025"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            android:layout_marginTop="@dimen/margin_small" />
+
+        <!-- Géneros -->
+        <TextView
+            android:id="@+id/tvGenres"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Acción, Suspenso, Aventura"
+            android:textColor="@color/chip_background"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="@dimen/text_size_normal"
+            app:layout_constraintStart_toStartOf="@id/tvReleaseDate"
+            app:layout_constraintTop_toBottomOf="@id/tvReleaseDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_xsmall" />
+
+        <!-- RatingBar en lugar de tvOverview -->
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="0.5"
+            style="?android:attr/ratingBarStyleSmall"
+            app:layout_constraintStart_toStartOf="@id/tvGenres"
+            app:layout_constraintTop_toBottomOf="@id/tvGenres"
+            android:layout_marginTop="@dimen/margin_small" />
+
+        <!-- TextView tvOverview agregado entre ratingBar y tvExtraInfo -->
+        <TextView
+            android:id="@+id/tvOverview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="When twelve mysterious spacecraft appear around the world..."
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_normal"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="@id/ratingBar"
+            app:layout_constraintTop_toBottomOf="@id/ratingBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_small" />
+
+        <!-- Información adicional (ej. duración, clasificación) -->
+        <TextView
+            android:id="@+id/tvExtraInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1h 56m  •  PG-13"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintStart_toStartOf="@id/tvOverview"
+            app:layout_constraintTop_toBottomOf="@id/tvOverview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_large" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

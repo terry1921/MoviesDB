@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Mobile Coding</string>
+    <string name="poster_description">Poster de pelicula</string>
+
+    <string name="popularity_format">Popularidad: %1$.2f</string>
+    <string name="vote_average_format">Promedio: %1$.1f</string>
+    <string name="original_language_format">Idioma original: %1$s</string>
+    <string name="vote_count_format">%1$d votos</string>
+
+</resources>

@@ -1,0 +1,9 @@
+package com.example.core.network.sources
+
+object Values {
+    const val FALSE = "false"
+    const val TRUE = "true"
+    const val ENGLISH = "en"
+    const val POPULARITY_DESC = "popularity.desc"
+    const val POPULARITY_ASC = "popularity.asc"
+}
