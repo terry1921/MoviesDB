@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- SwipeRefreshLayout que contiene el RecyclerView -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="0dp"
@@ -23,7 +22,6 @@
             tools:listitem="@layout/item_movie" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <!-- Indicador de carga centrado -->
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progressBar"
         style="@style/Widget.MaterialComponents.CircularProgressIndicator"

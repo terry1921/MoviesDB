@@ -12,7 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mobilecoding.R
 import com.example.mobilecoding.databinding.FragmentMovieListBinding
+import com.example.mobilecoding.detail.MovieDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -25,7 +27,11 @@ class MovieListFragment : Fragment() {
     private val viewModel: MoviesViewModel by viewModels()
     private val moviesAdapter: MoviesAdapter by lazy {
         MoviesAdapter { movie ->
-            Timber.tag("MovieListFragment").d("Movie clicked: $movie")
+            Timber.tag("MovieListFragment").d("Movie clicked: ${movie.id}")
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, MovieDetailFragment.newInstance(movie.id))
+                .addToBackStack(null)
+                .commit()
         }
     }
 

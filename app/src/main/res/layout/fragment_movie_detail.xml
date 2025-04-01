@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/detailCoordinatorLayout"
+    android:background="@color/black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivBackdrop"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/poster_description" />
+
+        <TextView
+            android:id="@+id/tvRatingImdb"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:padding="@dimen/margin_medium"
+            android:background="@drawable/bg_rounded_white"
+            android:text="9.1/10 IMDb"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_xlarge"
+            android:textColor="@color/golden"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDetail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/ivBackdrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="-20dp"
+            app:cardCornerRadius="@dimen/corner_radius_large"
+            app:cardElevation="8dp"
+            app:layout_anchor="@id/ivBackdrop"
+            app:layout_anchorGravity="bottom">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_xlarge">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Spiderman: No Way Home"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_xxlarge"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/margin_small" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvLanguage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="English"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:textColor="@color/grey_dark"
+                        android:textSize="@dimen/text_size_medium" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/grey_dark"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        app:layout_constraintBottom_toBottomOf="@id/tvLanguage" />
+
+                    <TextView
+                        android:id="@+id/tvLength"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2h 28min"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:textColor="@color/grey_dark"
+                        android:textSize="@dimen/text_size_medium" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/grey_dark"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        app:layout_constraintBottom_toBottomOf="@id/tvLanguage" />
+
+                    <TextView
+                        android:id="@+id/tvReleaseDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Feb 12, 2022"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:textColor="@color/grey_dark"
+                        android:textSize="@dimen/text_size_medium" />
+
+                </LinearLayout>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupGenres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true"
+                    app:chipSpacing="8dp"
+                    android:layout_marginBottom="@dimen/margin_medium" />
+
+                <LinearLayout
+                    android:id="@+id/llInfoRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:weightSum="1"
+                    android:layout_marginBottom="@dimen/margin_medium">
+
+                    <TextView
+                        android:id="@+id/tvBudget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Budget: $0"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="@dimen/text_size_medium" />
+
+                    <TextView
+                        android:id="@+id/tvRevenue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Revenue: $0"
+                        android:textColor="@android:color/holo_green_dark"
+                        android:textSize="@dimen/text_size_medium" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvOverview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="With Spider-Man’s identity now revealed, ... "
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_large"
+                    android:layout_marginBottom="@dimen/margin_large" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

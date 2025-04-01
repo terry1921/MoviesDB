@@ -11,18 +11,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.core.model.movie.Movie
+import com.example.core.network.sources.Endpoints
 import com.example.mobilecoding.R
-import java.text.SimpleDateFormat
-import java.util.Locale
+import com.example.mobilecoding.formatDate
 
 class MoviesAdapter(
     private val onItemClick: ((Movie) -> Unit)? = null
 ) : ListAdapter<Movie, MoviesAdapter.MovieViewHolder>(MovieDiffCallback()) {
 
-    // Mapeo de géneros (id -> nombre)
     private var genreMap: Map<Int, String> = emptyMap()
-
-    // Método para actualizar el mapeo de géneros
     fun setGenreMap(map: Map<Int, String>) {
         genreMap = map
         notifyDataSetChanged()
@@ -51,28 +48,18 @@ class MoviesAdapter(
 
         holder.tvTitle.text = movie.title
         holder.tvVoteCount.text = context.getString(R.string.vote_count_format, movie.voteCount)
-        holder.tvReleaseDate.text = formatDate(movie.releaseDate)
+        holder.tvReleaseDate.text = movie.releaseDate.formatDate()
         val genreNames = movie.genreIds.mapNotNull { genreMap[it] }
         holder.tvGenres.text = if (genreNames.isNotEmpty()) genreNames.joinToString(", ") else "N/A"
         holder.ratingBar.rating = (movie.voteAverage / 2).toFloat()
         holder.tvOverview.text = movie.overview
         holder.tvExtraInfo.text = context.getString(R.string.original_language_format, movie.originalLanguage)
         Glide.with(context)
-            .load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
+            .load("${Endpoints.IMAGE_URL}w500${movie.posterPath}")
             .into(holder.ivPoster)
         holder.itemView.setOnClickListener { onItemClick?.invoke(movie) }
     }
 
-    private fun formatDate(dateStr: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-            val date = inputFormat.parse(dateStr)
-            date?.let { outputFormat.format(it) } ?: dateStr
-        } catch (e: Exception) {
-            dateStr
-        }
-    }
 }
 
 class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {

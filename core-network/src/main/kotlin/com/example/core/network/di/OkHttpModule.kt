@@ -2,7 +2,6 @@ package com.example.core.network.di
 
 import com.example.core.network.interceptor.MyInterceptor
 import com.example.core.network.okhttp.NetworkClient
-import com.example.core.network.okhttp.NetworkClientRedirect
 import com.example.core.network.okhttp.OkHttpNetworkClient
 import com.example.core.network.utils.Constant
 import com.google.gson.Gson
@@ -36,18 +35,7 @@ object OkHttpModule {
     fun provideNetworkClient(
         okHttpClientFactory: OkHttpClientFactory
     ): NetworkClient {
-        return OkHttpNetworkClient(okHttpClientFactory.create(isRedirect = false).build(), provideGson())
-    }
-
-    @Provides
-    @Singleton
-    fun provideNetworkClientRedirect(
-        okHttpClientFactory: OkHttpClientFactory
-    ): NetworkClientRedirect {
-        return NetworkClientRedirect(
-            okHttpClientFactory.create(isRedirect = true).build(),
-            provideGson()
-        )
+        return OkHttpNetworkClient(okHttpClientFactory.create(isRedirect = false).build())
     }
 
     @AssistedFactory

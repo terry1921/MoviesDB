@@ -58,7 +58,7 @@ class MoviesViewModel @Inject constructor(
                                     movies = accumulatedMovies.toList()
                                 )
                             )
-                            _currentPage.value = _currentPage.value + 1
+                            _currentPage.value += 1
                         }
                     }
                 }
@@ -72,10 +72,6 @@ class MoviesViewModel @Inject constructor(
         loadNextPage()
     }
 
-    /**
-     * Carga el mapeo de géneros. La implementación del GenreRepository se encarga de
-     * verificar si ya existen datos guardados en DataStore y no realiza una llamada remota si ya hay datos.
-     */
     fun loadGenresMapping() {
         viewModelScope.launch(dispatcher) {
             genreRepository.getGenres()

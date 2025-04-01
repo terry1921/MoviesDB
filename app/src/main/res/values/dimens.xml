@@ -7,12 +7,20 @@
     <dimen name="margin_small">4dp</dimen>
     <dimen name="margin_medium">8dp</dimen>
     <dimen name="margin_large">12dp</dimen>
+    <dimen name="margin_xlarge">16dp</dimen>
 
     <!-- Tamaños de texto -->
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_normal">13sp</dimen>
     <dimen name="text_size_medium">14sp</dimen>
     <dimen name="text_size_large">16sp</dimen>
+    <dimen name="text_size_xlarge">18sp</dimen>
+    <dimen name="text_size_xxlarge">20sp</dimen>
+
+    <!-- Tamaños de esquinas -->
+    <dimen name="corner_radius_small">4dp</dimen>
+    <dimen name="corner_radius_medium">8dp</dimen>
+    <dimen name="corner_radius_large">12dp</dimen>
 
     <!-- Dimensiones para el poster -->
     <dimen name="movie_poster_width">110dp</dimen>

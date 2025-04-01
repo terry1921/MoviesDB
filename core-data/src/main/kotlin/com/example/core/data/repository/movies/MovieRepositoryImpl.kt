@@ -6,11 +6,12 @@ import com.example.core.network.AppDispatcher
 import com.example.core.network.Dispatcher
 import com.example.core.network.okhttp.NetworkClient
 import com.example.core.network.sources.Endpoints
-import com.example.core.network.utils.HttpMethod
 import com.example.core.network.sources.Parameters
 import com.example.core.network.sources.Values
+import com.example.core.network.utils.HttpMethod
 import com.example.core.network.utils.RequestDto
 import com.example.core.network.utils.getRequest
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,8 +22,9 @@ import javax.inject.Inject
 @VisibleForTesting
 class MovieRepositoryImpl @Inject constructor(
     private val network: NetworkClient,
+    private val gson: Gson,
     @Dispatcher(AppDispatcher.IO) private val dispatcher: CoroutineDispatcher
-): MovieRepository {
+) : MovieRepository {
 
     override fun getMostPopularMovies(
         page: Int,
@@ -42,7 +44,7 @@ class MovieRepositoryImpl @Inject constructor(
         if (response.isSuccessful) {
             val body = response.peekBody(Long.MAX_VALUE).string()
             if (body.isNotEmpty()) {
-                val moviesResponse = network.gson().fromJson(body, MoviesResponse::class.java)
+                val moviesResponse = gson.fromJson(body, MoviesResponse::class.java)
                 val moviesResult = MoviesResult(
                     totalResults = moviesResponse.totalResults,
                     totalPages = moviesResponse.totalPages,
@@ -56,9 +58,4 @@ class MovieRepositoryImpl @Inject constructor(
             emit(MovieRepositoryState.Error("Error en la respuesta: ${response.code}"))
         }
     }.flowOn(dispatcher)
-}
-
-sealed class MovieRepositoryState {
-    data class Success(val result: MoviesResult) : MovieRepositoryState()
-    data class Error(val error: String) : MovieRepositoryState()
 }

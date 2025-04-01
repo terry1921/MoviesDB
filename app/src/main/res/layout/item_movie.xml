@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Poster de la película -->
         <ImageView
             android:id="@+id/ivPoster"
             android:layout_width="@dimen/movie_poster_width"
@@ -26,7 +25,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <!-- Número de votos en la esquina superior derecha -->
         <TextView
             android:id="@+id/tvVoteCount"
             android:layout_width="wrap_content"
@@ -40,7 +38,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Título de la película -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
@@ -58,7 +55,6 @@
             app:layout_constraintEnd_toStartOf="@id/tvVoteCount"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Fecha de estreno en lugar del año -->
         <TextView
             android:id="@+id/tvReleaseDate"
             android:layout_width="wrap_content"
@@ -70,7 +66,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
             android:layout_marginTop="@dimen/margin_small" />
 
-        <!-- Géneros -->
         <TextView
             android:id="@+id/tvGenres"
             android:layout_width="0dp"
@@ -86,7 +81,6 @@
             android:layout_marginEnd="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_xsmall" />
 
-        <!-- RatingBar en lugar de tvOverview -->
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
@@ -99,7 +93,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvGenres"
             android:layout_marginTop="@dimen/margin_small" />
 
-        <!-- TextView tvOverview agregado entre ratingBar y tvExtraInfo -->
         <TextView
             android:id="@+id/tvOverview"
             android:layout_width="0dp"
@@ -115,7 +108,6 @@
             android:layout_marginEnd="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_small" />
 
-        <!-- Información adicional (ej. duración, clasificación) -->
         <TextView
             android:id="@+id/tvExtraInfo"
             android:layout_width="wrap_content"

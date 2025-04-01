@@ -4,7 +4,6 @@ plugins {
     id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.hilt.plugin.get().pluginId)
     alias(libs.plugins.ksp)
-//    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
