@@ -6,10 +6,12 @@ import com.example.core.data.repository.genre.GenreRepository
 import com.example.core.data.repository.genre.GenreRepositoryState
 import com.example.core.data.repository.movies.MovieRepository
 import com.example.core.data.repository.movies.MovieRepositoryState
+import com.example.core.data.repository.movies.SortOption
 import com.example.core.model.movie.Movie
 import com.example.core.model.movie.MoviesResult
 import com.example.core.network.AppDispatcher
 import com.example.core.network.Dispatcher
+import com.example.core.network.sources.Values
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +34,8 @@ class MoviesViewModel @Inject constructor(
     private val _genreMap: MutableStateFlow<Map<Int, String>> = MutableStateFlow(emptyMap())
     val genreMap: StateFlow<Map<Int, String>> = _genreMap
 
+    private val _sortOption = MutableStateFlow(SortOption.POPULARITY_DESC)
+
     private val _currentPage = MutableStateFlow(1)
     private val _totalPages = MutableStateFlow(1)
     private val accumulatedMovies = mutableListOf<Movie>()
@@ -40,7 +44,7 @@ class MoviesViewModel @Inject constructor(
         if (_currentPage.value > _totalPages.value) return
 
         viewModelScope.launch(dispatcher) {
-            movieRepository.getMostPopularMovies(_currentPage.value)
+            movieRepository.getMostPopularMovies(_currentPage.value, _sortOption.value)
                 .onStart { _uiState.value = MainState.Loading }
                 .catch { _uiState.value = MainState.Error(it.message ?: "Error genérico") }
                 .collect { result ->
@@ -48,6 +52,7 @@ class MoviesViewModel @Inject constructor(
                         is MovieRepositoryState.Error -> {
                             _uiState.value = MainState.Error(result.error)
                         }
+
                         is MovieRepositoryState.Success -> {
                             _totalPages.value = result.result.totalPages
                             accumulatedMovies.addAll(result.result.movies)
@@ -81,6 +86,7 @@ class MoviesViewModel @Inject constructor(
                         is GenreRepositoryState.Error -> {
                             _uiState.value = MainState.Error(result.error)
                         }
+
                         is GenreRepositoryState.Success -> {
                             val map = result.genres.associate { it.id to it.name }
                             _genreMap.value = map
@@ -88,6 +94,11 @@ class MoviesViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    fun setSortOption(option: SortOption) = viewModelScope.launch(dispatcher) {
+        _sortOption.value = option
+        refresh()
     }
 }
 

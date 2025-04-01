@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.data.repository.movies.SortOption
 import com.example.mobilecoding.R
 import com.example.mobilecoding.databinding.FragmentMovieListBinding
 import com.example.mobilecoding.detail.MovieDetailFragment
@@ -56,11 +58,34 @@ class MovieListFragment : Fragment() {
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
+        configureSort()
+
         viewModel.loadGenresMapping()
 
         setupInfiniteScroll()
         viewModel.refresh()
         observeUIState()
+    }
+
+    private fun configureSort() {
+        binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View?, position: Int, id: Long
+            ) {
+                val sortOption = when (position) {
+                    0 -> SortOption.POPULARITY_DESC
+                    1 -> SortOption.POPULARITY_ASC
+                    2 -> SortOption.VOTE_AVG_DESC
+                    3 -> SortOption.VOTE_AVG_ASC
+                    4 -> SortOption.VOTE_COUNT_DESC
+                    5 -> SortOption.VOTE_COUNT_ASC
+                    else -> SortOption.POPULARITY_DESC
+                }
+                viewModel.setSortOption(sortOption)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 
     private fun setupInfiniteScroll() {

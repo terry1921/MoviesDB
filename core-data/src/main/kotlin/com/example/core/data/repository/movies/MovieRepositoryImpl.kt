@@ -28,6 +28,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun getMostPopularMovies(
         page: Int,
+        sortBy: SortOption
     ): Flow<MovieRepositoryState> = flow {
         val dto = RequestDto(
             method = HttpMethod.GET,
@@ -37,7 +38,7 @@ class MovieRepositoryImpl @Inject constructor(
                 Parameters.INCLUDE_VIDEO to Values.FALSE,
                 Parameters.LANGUAGE to Values.ENGLISH,
                 Parameters.PAGE to page.toString(),
-                Parameters.SORT_BY to Values.POPULARITY_DESC
+                Parameters.SORT_BY to sortBy.value,
             ),
         )
         val response = network.newCall(dto.getRequest()).execute()

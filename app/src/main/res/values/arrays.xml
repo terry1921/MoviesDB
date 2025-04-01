@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_options">
+        <item>Popularidad Descendente</item>
+        <item>Popularidad Ascendente</item>
+        <item>Promedio de Voto Descendente</item>
+        <item>Promedio de Voto Ascendente</item>
+        <item>Conteo de votos Descendente</item>
+        <item>Conteo de votos Ascendente</item>
+    </string-array>
+</resources>
