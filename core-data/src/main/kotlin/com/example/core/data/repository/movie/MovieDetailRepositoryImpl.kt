@@ -1,5 +1,7 @@
 package com.example.core.data.repository.movie
 
+import com.example.core.data.repository.RepositoryState
+import com.example.core.data.repository.handleError
 import com.example.core.model.movie.MovieDetail
 import com.example.core.network.AppDispatcher
 import com.example.core.network.Dispatcher
@@ -23,7 +25,7 @@ class MovieDetailRepositoryImpl @Inject constructor(
     @Dispatcher(AppDispatcher.IO) private val dispatcher: CoroutineDispatcher
 ) : MovieDetailRepository {
 
-    override fun getMovieDetail(movieId: Int): Flow<MovieDetailRepositoryState> = flow {
+    override fun getMovieDetail(movieId: Int): Flow<RepositoryState<MovieDetail>> = flow {
         val endpoint = Endpoints.MOVIE_DETAIL.replace("{movie_id}", movieId.toString())
         val dto = RequestDto(
             method = HttpMethod.GET,
@@ -34,12 +36,14 @@ class MovieDetailRepositoryImpl @Inject constructor(
             val body = response.body?.string()
             if (body != null) {
                 val detail = gson.fromJson(body, MovieDetail::class.java)
-                emit(MovieDetailRepositoryState.Success(detail))
+                emit(RepositoryState.Success(detail))
             } else {
-                emit(MovieDetailRepositoryState.Error("El cuerpo de la respuesta es nulo"))
+                emit(RepositoryState.Error(
+                    code = 1,
+                    error = "El cuerpo de la respuesta es nulo"))
             }
         } else {
-            emit(MovieDetailRepositoryState.Error("Error en la respuesta: ${response.code}"))
+            emit(response.handleError())
         }
     }.flowOn(dispatcher)
 }

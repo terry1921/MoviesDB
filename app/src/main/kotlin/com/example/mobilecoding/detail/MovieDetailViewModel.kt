@@ -2,8 +2,8 @@ package com.example.mobilecoding.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.data.repository.RepositoryState
 import com.example.core.data.repository.movie.MovieDetailRepository
-import com.example.core.data.repository.movie.MovieDetailRepositoryState
 import com.example.core.model.movie.MovieDetail
 import com.example.core.network.AppDispatcher
 import com.example.core.network.Dispatcher
@@ -33,10 +33,10 @@ class MovieDetailViewModel @Inject constructor(
                 .catch { _detailState.value = MovieDetailState.Error(it.message ?: "Error retrieving movie detail") }
                 .collect { result ->
                     when (result) {
-                        is MovieDetailRepositoryState.Success -> {
-                            _detailState.value = MovieDetailState.Success(result.detail)
+                        is RepositoryState.Success -> {
+                            _detailState.value = MovieDetailState.Success(result.data)
                         }
-                        is MovieDetailRepositoryState.Error -> {
+                        is RepositoryState.Error -> {
                             _detailState.value = MovieDetailState.Error(result.error)
                         }
                     }

@@ -1,6 +1,7 @@
 package com.example.core.data.repository.movies
 
 import androidx.annotation.WorkerThread
+import com.example.core.data.repository.RepositoryState
 import com.example.core.model.movie.MoviesResult
 import com.example.core.network.sources.Values
 import kotlinx.coroutines.flow.Flow
@@ -11,12 +12,7 @@ interface MovieRepository {
     fun getMostPopularMovies(
         page: Int,
         sortBy: SortOption
-    ): Flow<MovieRepositoryState>
-}
-
-sealed class MovieRepositoryState {
-    data class Success(val result: MoviesResult) : MovieRepositoryState()
-    data class Error(val error: String) : MovieRepositoryState()
+    ): Flow<RepositoryState<MoviesResult>>
 }
 
 enum class SortOption(val value: String) {

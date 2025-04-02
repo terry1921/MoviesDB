@@ -1,6 +1,9 @@
 package com.example.core.data.repository.genre
 
+import com.example.core.data.repository.RepositoryState
+import com.example.core.data.repository.handleError
 import com.example.core.database.genre.GenreDataStore
+import com.example.core.model.genre.Genre
 import com.example.core.model.genre.GenresResponse
 import com.example.core.network.AppDispatcher
 import com.example.core.network.Dispatcher
@@ -17,6 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.Response
 import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
@@ -28,10 +32,10 @@ class GenreRepositoryImpl @Inject constructor(
     @Dispatcher(AppDispatcher.IO) private val dispatcher: CoroutineDispatcher
 ) : GenreRepository {
 
-    override fun getGenres(): Flow<GenreRepositoryState> = flow {
+    override fun getGenres() = flow {
         val cachedGenres = genreDataStore.genresFlow.first()
         if (cachedGenres.isNotEmpty()) {
-            emit(GenreRepositoryState.Success(cachedGenres))
+            emit(RepositoryState.Success(cachedGenres))
         } else {
             val dto = RequestDto(
                 method = HttpMethod.GET,
@@ -46,13 +50,17 @@ class GenreRepositoryImpl @Inject constructor(
                 if (body != null) {
                     val genresResponse = gson.fromJson(body, GenresResponse::class.java)
                     genreDataStore.saveGenres(genresResponse.genres)
-                    emit(GenreRepositoryState.Success(genresResponse.genres))
+                    emit(RepositoryState.Success(genresResponse.genres))
                 } else {
-                    emit(GenreRepositoryState.Error("Error en el cuerpo de la respuesta"))
+                    emit(RepositoryState.Error(
+                        code = 1,
+                        error = "Error en el cuerpo de la respuesta")
+                    )
                 }
             } else {
-                emit(GenreRepositoryState.Error("Error en la respuesta: ${response.code}"))
+                emit(response.handleError())
             }
         }
     }.flowOn(dispatcher)
+
 }

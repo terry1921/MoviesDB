@@ -1,5 +1,7 @@
 package com.example.core.data.repository.movies
 
+import com.example.core.data.repository.RepositoryState
+import com.example.core.data.repository.handleError
 import com.example.core.model.movie.MoviesResponse
 import com.example.core.model.movie.MoviesResult
 import com.example.core.network.AppDispatcher
@@ -29,7 +31,7 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getMostPopularMovies(
         page: Int,
         sortBy: SortOption
-    ): Flow<MovieRepositoryState> = flow {
+    ): Flow<RepositoryState<MoviesResult>> = flow {
         val dto = RequestDto(
             method = HttpMethod.GET,
             resource = Endpoints.MOVIES_LIST,
@@ -38,8 +40,8 @@ class MovieRepositoryImpl @Inject constructor(
                 Parameters.INCLUDE_VIDEO to Values.FALSE,
                 Parameters.LANGUAGE to Values.ENGLISH,
                 Parameters.PAGE to page.toString(),
-                Parameters.SORT_BY to sortBy.value,
-            ),
+                Parameters.SORT_BY to sortBy.value
+            )
         )
         val response = network.newCall(dto.getRequest()).execute()
         if (response.isSuccessful) {
@@ -51,12 +53,15 @@ class MovieRepositoryImpl @Inject constructor(
                     totalPages = moviesResponse.totalPages,
                     movies = moviesResponse.results
                 )
-                emit(MovieRepositoryState.Success(moviesResult))
+                emit(RepositoryState.Success(moviesResult))
             } else {
-                emit(MovieRepositoryState.Error("Error en el cuerpo de la respuesta"))
+                emit(RepositoryState.Error(
+                    code = 1,
+                    error = "Error en el cuerpo de la respuesta")
+                )
             }
         } else {
-            emit(MovieRepositoryState.Error("Error en la respuesta: ${response.code}"))
+            emit(response.handleError())
         }
     }.flowOn(dispatcher)
 }

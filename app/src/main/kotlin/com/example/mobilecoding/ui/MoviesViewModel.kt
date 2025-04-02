@@ -2,16 +2,14 @@ package com.example.mobilecoding.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.data.repository.RepositoryState
 import com.example.core.data.repository.genre.GenreRepository
-import com.example.core.data.repository.genre.GenreRepositoryState
 import com.example.core.data.repository.movies.MovieRepository
-import com.example.core.data.repository.movies.MovieRepositoryState
 import com.example.core.data.repository.movies.SortOption
 import com.example.core.model.movie.Movie
 import com.example.core.model.movie.MoviesResult
 import com.example.core.network.AppDispatcher
 import com.example.core.network.Dispatcher
-import com.example.core.network.sources.Values
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,20 +44,20 @@ class MoviesViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             movieRepository.getMostPopularMovies(_currentPage.value, _sortOption.value)
                 .onStart { _uiState.value = MainState.Loading }
-                .catch { _uiState.value = MainState.Error(it.message ?: "Error genérico") }
+                .catch { _uiState.value = MainState.Error(it.hashCode(), it.message ?: "Error retrieving movies") }
                 .collect { result ->
                     when (result) {
-                        is MovieRepositoryState.Error -> {
-                            _uiState.value = MainState.Error(result.error)
+                        is RepositoryState.Error -> {
+                            _uiState.value = MainState.Error(result.code, result.error)
                         }
 
-                        is MovieRepositoryState.Success -> {
-                            _totalPages.value = result.result.totalPages
-                            accumulatedMovies.addAll(result.result.movies)
+                        is RepositoryState.Success -> {
+                            _totalPages.value = result.data.totalPages
+                            accumulatedMovies.addAll(result.data.movies)
                             _uiState.value = MainState.MoviesSuccess(
                                 MoviesResult(
-                                    totalResults = result.result.totalResults,
-                                    totalPages = result.result.totalPages,
+                                    totalResults = result.data.totalResults,
+                                    totalPages = result.data.totalPages,
                                     movies = accumulatedMovies.toList()
                                 )
                             )
@@ -80,15 +78,15 @@ class MoviesViewModel @Inject constructor(
     fun loadGenresMapping() {
         viewModelScope.launch(dispatcher) {
             genreRepository.getGenres()
-                .catch { _uiState.value = MainState.Error(it.message ?: "Error retrieving genres") }
+                .catch { _uiState.value = MainState.Error(it.hashCode(), it.message ?: "Error retrieving genres") }
                 .collect { result ->
                     when (result) {
-                        is GenreRepositoryState.Error -> {
-                            _uiState.value = MainState.Error(result.error)
+                        is RepositoryState.Error -> {
+                            _uiState.value = MainState.Error(result.code, result.error)
                         }
 
-                        is GenreRepositoryState.Success -> {
-                            val map = result.genres.associate { it.id to it.name }
+                        is RepositoryState.Success -> {
+                            val map = result.data.associate { it.id to it.name }
                             _genreMap.value = map
                         }
                     }
@@ -106,5 +104,5 @@ sealed class MainState {
     data object Loading : MainState()
     data class MoviesSuccess(val result: MoviesResult) : MainState()
     data object GenresSuccess : MainState()
-    data class Error(val error: String) : MainState()
+    data class Error(val code: Int, val message: String) : MainState()
 }

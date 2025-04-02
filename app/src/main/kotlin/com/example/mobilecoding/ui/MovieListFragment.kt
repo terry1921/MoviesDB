@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -109,14 +108,25 @@ class MovieListFragment : Fragment() {
                     when (state) {
                         is MainState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
+                            binding.spinnerSort.visibility = View.GONE
+                            binding.rvMovies.visibility = View.GONE
+                            binding.errorView.visibility = View.GONE
                         }
+
                         is MainState.MoviesSuccess -> {
                             binding.progressBar.visibility = View.GONE
+                            binding.rvMovies.visibility = View.VISIBLE
+                            binding.spinnerSort.visibility = View.VISIBLE
+                            binding.errorView.visibility = View.GONE
                             moviesAdapter.submitList(state.result.movies)
                         }
+
                         is MainState.Error -> {
                             binding.progressBar.visibility = View.GONE
-                            Toast.makeText(requireContext(), state.error, Toast.LENGTH_SHORT).show()
+                            binding.rvMovies.visibility = View.GONE
+                            binding.spinnerSort.visibility = View.GONE
+                            binding.errorView.visibility = View.VISIBLE
+                            binding.tvErrorMessage.text = state.message
                         }
 
                         MainState.GenresSuccess -> Unit
