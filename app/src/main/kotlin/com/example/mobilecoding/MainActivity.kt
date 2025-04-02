@@ -2,7 +2,7 @@ package com.example.mobilecoding
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mobilecoding.ui.MovieListFragment
+import com.example.mobilecoding.main.MovieListFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

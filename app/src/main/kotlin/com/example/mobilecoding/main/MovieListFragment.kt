@@ -1,4 +1,4 @@
-package com.example.mobilecoding.ui
+package com.example.mobilecoding.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -58,12 +58,11 @@ class MovieListFragment : Fragment() {
         }
 
         configureSort()
-
         viewModel.loadGenresMapping()
-
         setupInfiniteScroll()
         viewModel.refresh()
         observeUIState()
+        binding.btnRetry.setOnClickListener { viewModel.refresh() }
     }
 
     private fun configureSort() {

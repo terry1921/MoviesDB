@@ -1,4 +1,4 @@
-package com.example.mobilecoding.ui
+package com.example.mobilecoding.main
 
 import android.view.LayoutInflater
 import android.view.View

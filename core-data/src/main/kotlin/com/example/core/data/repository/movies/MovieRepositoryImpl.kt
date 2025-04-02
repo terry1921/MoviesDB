@@ -2,6 +2,7 @@ package com.example.core.data.repository.movies
 
 import com.example.core.data.repository.RepositoryState
 import com.example.core.data.repository.handleError
+import com.example.core.database.movie.MovieEntityRepository
 import com.example.core.model.movie.MoviesResponse
 import com.example.core.model.movie.MoviesResult
 import com.example.core.network.AppDispatcher
@@ -23,6 +24,7 @@ import javax.inject.Inject
 
 @VisibleForTesting
 class MovieRepositoryImpl @Inject constructor(
+    private val movieEntityRepository: MovieEntityRepository,
     private val network: NetworkClient,
     private val gson: Gson,
     @Dispatcher(AppDispatcher.IO) private val dispatcher: CoroutineDispatcher
@@ -53,11 +55,14 @@ class MovieRepositoryImpl @Inject constructor(
                     totalPages = moviesResponse.totalPages,
                     movies = moviesResponse.results
                 )
+                movieEntityRepository.saveMovies(moviesResponse.results)
                 emit(RepositoryState.Success(moviesResult))
             } else {
-                emit(RepositoryState.Error(
-                    code = 1,
-                    error = "Error en el cuerpo de la respuesta")
+                emit(
+                    RepositoryState.Error(
+                        code = 1,
+                        error = "Error en el cuerpo de la respuesta"
+                    )
                 )
             }
         } else {

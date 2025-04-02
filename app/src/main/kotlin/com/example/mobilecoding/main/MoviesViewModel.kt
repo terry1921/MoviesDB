@@ -1,4 +1,4 @@
-package com.example.mobilecoding.ui
+package com.example.mobilecoding.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
