@@ -9,5 +9,6 @@
     <string name="budget">"Budget: %1$s"</string>
     <string name="revenue">"Revenue: %1$s"</string>
     <string name="rating">%1$s/10 IMDb</string>
+    <string name="search">buscar</string>
 
 </resources>

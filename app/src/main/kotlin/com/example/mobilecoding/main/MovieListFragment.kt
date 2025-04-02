@@ -16,6 +16,7 @@ import com.example.core.data.repository.movies.SortOption
 import com.example.mobilecoding.R
 import com.example.mobilecoding.databinding.FragmentMovieListBinding
 import com.example.mobilecoding.detail.MovieDetailFragment
+import com.example.mobilecoding.search.SearchFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -63,6 +64,13 @@ class MovieListFragment : Fragment() {
         viewModel.refresh()
         observeUIState()
         binding.btnRetry.setOnClickListener { viewModel.refresh() }
+        binding.ivSearch.setOnClickListener {
+            Timber.tag("MovieListFragment").d("Search icon clicked")
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, SearchFragment.newInstance())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun configureSort() {

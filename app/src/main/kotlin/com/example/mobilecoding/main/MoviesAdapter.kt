@@ -48,10 +48,10 @@ class MoviesAdapter(
 
         holder.tvTitle.text = movie.title
         holder.tvVoteCount.text = context.getString(R.string.vote_count_format, movie.voteCount)
-        holder.tvReleaseDate.text = movie.releaseDate.formatDate()
-        val genreNames = movie.genreIds.mapNotNull { genreMap[it] }
-        holder.tvGenres.text = if (genreNames.isNotEmpty()) genreNames.joinToString(", ") else "N/A"
-        holder.ratingBar.rating = (movie.voteAverage / 2).toFloat()
+        holder.tvReleaseDate.text = movie.releaseDate?.formatDate()
+        val genreNames = movie.genreIds?.mapNotNull { genreMap[it] }
+        holder.tvGenres.text = if (genreNames?.isNotEmpty() == true) genreNames.joinToString(", ") else "N/A"
+        holder.ratingBar.rating = (movie.voteAverage?.div(2))?.toFloat() ?: 0f
         holder.tvOverview.text = movie.overview
         holder.tvExtraInfo.text = context.getString(R.string.original_language_format, movie.originalLanguage)
         Glide.with(context)
