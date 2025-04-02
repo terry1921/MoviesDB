@@ -3,7 +3,6 @@ package com.example.core.data.repository.genre
 import com.example.core.data.repository.RepositoryState
 import com.example.core.data.repository.handleError
 import com.example.core.database.genre.GenreDataStore
-import com.example.core.model.genre.Genre
 import com.example.core.model.genre.GenresResponse
 import com.example.core.network.AppDispatcher
 import com.example.core.network.Dispatcher
@@ -16,11 +15,9 @@ import com.example.core.network.utils.RequestDto
 import com.example.core.network.utils.getRequest
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import okhttp3.Response
 import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 

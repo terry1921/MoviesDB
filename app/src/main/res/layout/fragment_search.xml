@@ -9,8 +9,10 @@
         android:id="@+id/etSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:autofillHints="2"
         android:hint="Search movies..."
         android:padding="16dp"
+        android:inputType="text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
